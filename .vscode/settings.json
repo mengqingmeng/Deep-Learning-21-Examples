@@ -1,0 +1,9 @@
+{
+    "python.pythonPath": "d:\\Softwares\\Anaconda3\\envs\\tf21\\python.exe",
+    "python.linting.pylintArgs": [
+        "--errors-only"
+    ],
+    "python.linting.enabled": false,
+    "files.autoSave": "onFocusChange",
+    "git.ignoreLimitWarning": true
+}
