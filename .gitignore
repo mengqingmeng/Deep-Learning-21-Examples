@@ -145,3 +145,4 @@ train_dir/
 *.tar.gz
 *.zip
 datasets/
+lfw/
