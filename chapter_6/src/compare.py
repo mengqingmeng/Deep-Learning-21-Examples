@@ -1,3 +1,4 @@
+#coding:utf-8
 """Performs face alignment and calculates L2 distance between the embeddings of images."""
 
 # MIT License
@@ -34,18 +35,20 @@ import os
 import argparse
 import facenet
 import align.detect_face
-
+import time
 
 def main(args):
-
+    beginImage = time.time()
     images = load_and_align_data(args.image_files, args.image_size, args.margin, args.gpu_memory_fraction)
+    print("align images cost:",(time.time()-beginImage))
     with tf.Graph().as_default():
 
         with tf.Session() as sess:
-
+            beginEmb = time.time()
             # Load the model
             facenet.load_model(args.model)
-
+            print("load model cost:",(time.time()-beginEmb))
+            beginEmb = time.time()
             # Get input and output tensors
             images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
             embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
@@ -54,7 +57,7 @@ def main(args):
             # Run forward pass to calculate embeddings
             feed_dict = {images_placeholder: images, phase_train_placeholder: False}
             emb = sess.run(embeddings, feed_dict=feed_dict)
-
+            print("emb cost:",(time.time()-beginEmb))
             nrof_images = len(args.image_files)
 
             print('Images:')
@@ -75,7 +78,7 @@ def main(args):
                     print('  %1.4f  ' % dist, end='')
                 print('')
 
-
+#检测人脸
 def load_and_align_data(image_paths, image_size, margin, gpu_memory_fraction):
 
     minsize = 20  # minimum size of face
@@ -83,6 +86,7 @@ def load_and_align_data(image_paths, image_size, margin, gpu_memory_fraction):
     factor = 0.709  # scale factor
 
     print('Creating networks and loading parameters')
+    #配置GPU和log
     with tf.Graph().as_default():
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu_memory_fraction)
         sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
@@ -91,7 +95,7 @@ def load_and_align_data(image_paths, image_size, margin, gpu_memory_fraction):
 
     nrof_samples = len(image_paths)
     img_list = [None] * nrof_samples
-    for i in xrange(nrof_samples):
+    for i in range(nrof_samples):
         img = misc.imread(os.path.expanduser(image_paths[i]))
         img_size = np.asarray(img.shape)[0:2]
         bounding_boxes, _ = align.detect_face.detect_face(img, minsize, pnet, rnet, onet, threshold, factor)
@@ -120,7 +124,7 @@ def parse_arguments(argv):
     parser.add_argument('--margin', type=int,
                         help='Margin for the crop around the bounding box (height, width) in pixels.', default=44)
     parser.add_argument('--gpu_memory_fraction', type=float,
-                        help='Upper bound on the amount of GPU memory that will be used by the process.', default=1.0)
+                        help='Upper bound on the amount of GPU memory that will be used by the process.', default=0.8)
     return parser.parse_args(argv)
 
 if __name__ == '__main__':

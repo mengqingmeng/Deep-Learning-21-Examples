@@ -1,6 +1,9 @@
+#conding:utf-8
 import tensorflow as tf
 import random
 import os
+
+#将图片集转为tfrecords格式
 
 try:
   from os import scandir
@@ -84,7 +87,7 @@ def data_writer(input_dir, output_file):
   output_dir = os.path.dirname(output_file)
   try:
     os.makedirs(output_dir)
-  except os.error, e:
+  except os.error as e:
     pass
 
   images_num = len(file_paths)

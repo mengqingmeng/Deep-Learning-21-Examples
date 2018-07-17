@@ -143,3 +143,5 @@ cifar10_train/
 train_dir/
 *.pd
 *.tar.gz
+*.zip
+datasets/

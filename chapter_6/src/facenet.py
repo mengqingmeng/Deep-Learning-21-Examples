@@ -372,7 +372,7 @@ def load_model(model):
         with gfile.FastGFile(model_exp,'rb') as f:
             graph_def = tf.GraphDef()
             graph_def.ParseFromString(f.read())
-            tf.import_graph_def(graph_def, name='')
+            tf.import_graph_def(graph_def, name='') #从graph_dep中将图导入到默认图中
     else:
         print('Model directory: %s' % model_exp)
         meta_file, ckpt_file = get_model_filenames(model_exp)

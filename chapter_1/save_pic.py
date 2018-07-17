@@ -8,7 +8,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 # 我们把原始图片保存在MNIST_data/raw/文件夹下
 # 如果没有这个文件夹会自动创建
-save_dir = 'MNIST_data/raw/'
+save_dir = './MNIST_data/raw/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
