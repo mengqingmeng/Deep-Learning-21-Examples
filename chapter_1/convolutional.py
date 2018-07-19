@@ -33,7 +33,7 @@ if __name__ == '__main__':
     x_image = tf.reshape(x, [-1, 28, 28, 1])
 
     # 第一层卷积层
-    W_conv1 = weight_variable([5, 5, 1, 32])
+    W_conv1 = weight_variable([5, 5, 1, 32]) #卷积核 
     b_conv1 = bias_variable([32])
     h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
     h_pool1 = max_pool_2x2(h_conv1)
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     keep_prob = tf.placeholder(tf.float32)
     h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
 
-    # 把1024维的向量转换成10维，对应10个类别
+    # 把1024维的向量转换成10维，对应10个类别，***最后一层不需要使用激活函数
     W_fc2 = weight_variable([1024, 10])
     b_fc2 = bias_variable([10])
     y_conv = tf.matmul(h_fc1_drop, W_fc2) + b_fc2
