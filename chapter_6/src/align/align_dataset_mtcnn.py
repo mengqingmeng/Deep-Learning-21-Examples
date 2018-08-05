@@ -27,7 +27,7 @@ from __future__ import print_function
 
 from scipy import misc
 import sys
-sys.path.append('E:\Workspace\DL\Deep-Learning-21-Examples\chapter_6\src')
+# sys.path.append('E:\Workspace\DL\Deep-Learning-21-Examples\chapter_6\src')
 
 import os
 import argparse

@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "d:\\Softwares\\Anaconda3\\envs\\tf21\\python.exe",
+    "python.pythonPath": "/anaconda3/envs/tf21/bin/python",
     "python.linting.pylintArgs": [
         "--errors-only"
     ],
